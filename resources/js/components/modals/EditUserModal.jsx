@@ -8,41 +8,16 @@ import {UserContext} from "../../Contexts/UserContext";
 import {useParams} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import axios from "axios";
-import Select from "react-select";
-
-const customStyles = {
-    control: (styles, { isFocused }) => {
-        return {
-            ...styles,
-            border: isFocused ? "1px solid #12193B" : "1px solid #E7E8EB",
-            backgroundColor: 'white',
-            boxShadow: 'none',
-            "&:hover": {
-                border: '1px solid #12193B'
-            },
-            padding: '5px',
-            borderRadius: '12px'
-        }
-    },
-    option: (styles, {  isDisabled, isFocused, isSelected }) => {
-        return {
-            ...styles,
-            backgroundColor: isFocused ? '#FFE9F1' : 'transparent',
-            color: isFocused ? '#FF2D78' : '#888C9D',
-            padding: '15px 0',
-            textAlign: 'center',
-        };
-    },
-}
+import CustomSelect from "../CustomSelect";
 
 const EditUserModal = () => {
     const params = useParams()
-    const [users, setUsers, loadUsers, setLoadUsers] = useContext(UserContext);
+    const [users, setUsers, loadUsers, setLoadUsers, message, setMessage, roles] = useContext(UserContext);
     const [user,setUser] = useState({});
-    const [roles,setRoles] = useState({});
     const [userStatus, setUserStatus] = useState("")
     const [selectedOption, setSelectedOption] = useState(null);
     const { register, handleSubmit, reset ,formState: { errors } } = useForm({mode: "onBlur"});
+    const [defaultValue, setDefaultValue] =  useState({});
 
     const onSubmit = (data) => {
         axios.post('/api/user/edit/' + params.id, {
@@ -60,12 +35,8 @@ const EditUserModal = () => {
             });
     }
 
-    const getAllRoles = () => {
-        axios.get('/api/roles')
-            .then((res) => {
-                setRoles(res.data.data)
-            })
-            .catch((err) => console.log(err))
+    const getAllRoles =  () => {
+        setSelectedOption(roles?.filter((e)=>{return (e.label == user.role)}))
     }
 
     const getCurrentUser = () => {
@@ -81,7 +52,7 @@ const EditUserModal = () => {
     useEffect(()=>{
         getCurrentUser();
         getAllRoles();
-    }, [users, user])
+    }, [users, user,roles])
 
 
     return (
@@ -109,15 +80,16 @@ const EditUserModal = () => {
                            placeholder={'E-Mail'} value={user?.email} register={register} disabled={userStatus === "BLOCKED" ?? false}
                            validation={{required: {value:true, message: 'This field is required'}}} error={errors?.email ?? false}
                     />
-                    <Select
+                    <CustomSelect
                         className="mt-4"
-                        styles={customStyles}
                         options={roles}
+                        defaultValue={selectedOption}
                         onChange={setSelectedOption}
                         isSearchable={false}
                         isClearable={true}
+                        disabled={userStatus === "BLOCKED"}
                         />
-                    <Button className={'text-white bg-customBlue'} disabled={userStatus === "BLOCKED" ?? false}>Save changes</Button>
+                    <Button className={'text-white bg-customBlue'}>Save changes</Button>
                 </form>
             </div>
         </Modal>

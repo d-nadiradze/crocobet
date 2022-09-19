@@ -32,7 +32,7 @@ const Modal = (props) => {
                         }
                     </div>
                     <div className="cursor-pointer border border-gray-200 rounded-full p-[12px]" onClick={closeModal}>
-                        <CloseIcon/>
+                        <img src="../images/close.svg" alt=""/>
                     </div>
                 </div>
                 {props.children}

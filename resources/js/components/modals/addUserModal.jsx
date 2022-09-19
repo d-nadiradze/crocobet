@@ -6,10 +6,11 @@ import Select from "react-select";
 import axios from "axios";
 import {UserContext} from "../../Contexts/UserContext";
 import {useForm} from "react-hook-form";
+import CustomSelect from "../CustomSelect";
 
 const addUserModal = () => {
     const [selectedOption, setSelectedOption] = useState(null);
-    const [users, setUsers, loadUsers, setLoadUsers] = useContext(UserContext);
+    const [users, setUsers, loadUsers, setLoadUsers, message , setMessage] = useContext(UserContext);
     const { register, handleSubmit, reset ,formState: { errors } } = useForm({mode: "onBlur"});
     const [roles,setRoles] = useState({});
 
@@ -22,6 +23,7 @@ const addUserModal = () => {
             .then(function (response) {
                 console.log(response);
                 setLoadUsers(!loadUsers)
+                setMessage(response.data.success)
             })
             .catch(function (error) {
                 console.log(error);
@@ -52,7 +54,7 @@ const addUserModal = () => {
                            placeholder={'E-Mail'}  register={register}
                            validation={{required: {value:true, message: 'This field is required'}}} error={errors?.email ?? false}
                     />
-                    <Select
+                    <CustomSelect
                         className="mt-4 rounded-xl"
                         options={roles}
                         onChange={setSelectedOption}

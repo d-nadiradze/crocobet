@@ -5,7 +5,10 @@ const UserContext = createContext();
 
 const UserContextProvider = ({children}) => {
     const [users, setUsers] = useState(null);
+    const [roles, setRoles] = useState(null);
     const [loadUsers, setLoadUsers] = useState(true)
+    const [message ,setMessage] = useState('')
+
 
     useEffect(() => {
         const fetchUser = () => {
@@ -18,12 +21,21 @@ const UserContextProvider = ({children}) => {
                 })
         }
 
+        const fetchRoles = () => {
+            axios.get('/api/roles')
+                .then((res) => {
+                    setRoles(res.data.data)
+                })
+                .catch((err) => console.log(err))
+        }
+
         fetchUser()
+        fetchRoles()
     }, [loadUsers]);
 
     return (
         // the Provider gives access to the context to its children
-        <UserContext.Provider value={[users, setUsers, loadUsers, setLoadUsers]} >
+        <UserContext.Provider value={[users, setUsers, loadUsers, setLoadUsers, message, setMessage, roles]} >
             {children}
         </UserContext.Provider>
     );
