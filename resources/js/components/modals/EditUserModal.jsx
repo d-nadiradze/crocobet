@@ -17,7 +17,6 @@ const EditUserModal = () => {
     const [userStatus, setUserStatus] = useState("")
     const [selectedOption, setSelectedOption] = useState(null);
     const { register, handleSubmit, reset ,formState: { errors } } = useForm({mode: "onBlur"});
-    const [defaultValue, setDefaultValue] =  useState({});
 
     const onSubmit = (data) => {
         axios.post('/api/user/edit/' + params.id, {
@@ -36,7 +35,7 @@ const EditUserModal = () => {
     }
 
     const getAllRoles =  () => {
-        setSelectedOption(roles?.filter((e)=>{return (e.label == user.role)}))
+        setSelectedOption(roles?.filter((e)=>{return (e.label === user.role)})[0])
     }
 
     const getCurrentUser = () => {
@@ -50,8 +49,8 @@ const EditUserModal = () => {
     }
 
     useEffect(()=>{
-        getCurrentUser();
         getAllRoles();
+        getCurrentUser();
     }, [users, user,roles])
 
 
@@ -74,11 +73,12 @@ const EditUserModal = () => {
                 </div>
                     <Input type={'text'} name={'name'} src={'../images/profilePic.svg'}
                            placeholder={'Full name'} value={user?.name} register={register} disabled={userStatus === "BLOCKED" ?? false}
-                           validation={{required: {value:true, message: 'This field is required'}}} error={errors?.name ?? false}
+                           validation={{required: {value:true, message: 'name field is required'}}} error={errors?.name ?? false}
                     />
+
                     <Input type={'email'} name={'email'} src={'../images/email.svg'}
                            placeholder={'E-Mail'} value={user?.email} register={register} disabled={userStatus === "BLOCKED" ?? false}
-                           validation={{required: {value:true, message: 'This field is required'}}} error={errors?.email ?? false}
+                           validation={{required: {value:true, message: 'email field is required'}}} error={errors?.email ?? false}
                     />
                     <CustomSelect
                         className="mt-4"

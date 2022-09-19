@@ -43,7 +43,7 @@ const Header = ({setFilteredUsers,filteredUsers}) => {
                     <img className={'w-full'} src={'../images/search.svg'} alt=""/>
                 </div>
                 <input
-                    className={'border-red-400 w-full  font-light text-sm border border-gray-200 pl-[40px] pr-[10px] py-[10px] rounded-xl placeholder:text-sm placeholder:font-light duration-300 focus:border-[#374047] focus:ring-1 focus:outline-none focus:border-blue-400'}
+                    className={'w-full font-light text-sm border border-gray-200 pl-[40px] pr-[10px] py-[10px] rounded-xl placeholder:text-sm placeholder:font-light duration-300 focus:border-[#374047] focus:ring-1 focus:outline-none focus:border-blue-400'}
                     type={'text'} name={'search'} placeholder={'Type to filter the table...'} ref={ref}
                     onChange={(e) => searchUsers(e)} autoFocus={true}
                 />
