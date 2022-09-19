@@ -22,8 +22,14 @@ module.exports = {
                     '100%': {opacity: '100%',},
                 },
                 slide:{
-                    '0%': {top: '-400px'},
-                    '100%': {top: '-0'},
+                    '0%': {
+                        top: '-400px',
+                        margin: '-400px 0 0 0 '
+                    },
+                    '100%': {
+                        top: '-0',
+                        margin: '-0 0 0 0 '
+                    },
                 },
                 dissepear: {
                     '0%': { opacity: '100%' },

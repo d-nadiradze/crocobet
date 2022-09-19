@@ -18,7 +18,8 @@ class UserResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'role_id' => $this->when($this->relationLoaded('role'), function () {
+            'email' => $this->email,
+            'role' => $this->when($this->relationLoaded('role'), function () {
                 return  $this->role?->name;
             }),
             'status' => UserStatusesEnum::from($this->status)->name

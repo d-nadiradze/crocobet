@@ -2,13 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter as Router,} from "react-router-dom";
 import SwitchRoutes from "./SwitchRoutes";
+import {UserContextProvider} from "./Contexts/UserContext";
 
 function App() {
 
     return (
-        <Router>
-            <SwitchRoutes/>
-        </Router>
+        <React.StrictMode>
+            <Router>
+                <UserContextProvider>
+                    <SwitchRoutes/>
+                </UserContextProvider>
+            </Router>
+        </React.StrictMode>
+
     );
 }
 

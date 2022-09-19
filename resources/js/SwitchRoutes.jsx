@@ -13,17 +13,17 @@ const SwitchRoutes = () => {
         <div className="App">
             <Routes location={background || location}>
                 <Route path="/" element={<Home />}>
-                    <Route path="edit" element={<EditUserModal />} />
+                    <Route path="edit/:id" element={<EditUserModal />} />
                     <Route path="add" element={<AddUserModal />} />
-                    <Route path="delete" element={<DeleteUserModal />} />
+                    <Route path="delete/:id" element={<DeleteUserModal />} />
                 </Route>
             </Routes>
 
             {background && (
                 <Routes>
-                    <Route path="edit" element={<EditUserModal />} />
+                    <Route path="edit/:id" element={<EditUserModal />} />
                     <Route path="add" element={<AddUserModal />} />
-                    <Route path="delete" element={<DeleteUserModal />} />
+                    <Route path="delete/:id" element={<DeleteUserModal />} />
                 </Routes>
             )}
 

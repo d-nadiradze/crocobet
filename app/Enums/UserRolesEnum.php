@@ -4,6 +4,6 @@ namespace App\Enums;
 
 enum UserRolesEnum: int
 {
-    case ADMIN = 1;
-    case USER = 2;
+    case ADMIN = 2;
+    case USER = 1;
 }
